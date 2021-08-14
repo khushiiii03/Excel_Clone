@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+}
+
+.title-bar {
+    height: 5vh;
+    width: 100vw;
+    background-color: #217346;
+    color: #fff;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;  /* allign horizontal */
+    align-items: center;      /* allign vertical */
+    
+}
+
+.menu-bar {
+    height: 5vh;
+    width: 100vw;
+    background-color: #217346;
+    display: flex;
+}
+
+.menu-bar-item {
+    color: #fff;
+    background-color: #217346;
+    padding: 0rem 0.7rem 0rem 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-bar-item.selected {
+    background-color: #fff;
+    color: #217346;
+}
+
+.menu-bar-item:hover {
+    background-color: #175533;
+    cursor: pointer;
+}
+
+.menu-bar-item.selected:hover {
+    background-color: #fff;
+    cursor: default;
+}
+
+.menu-icon-bar {
+    display: flex;
+    height: 6vh;
+    align-items: center;
+}
+
+.menu-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0rem 0.7rem 0rem 0.7rem;
+    height: 100%;
+}
+
+.menu-icon:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.menu-selector {
+    height: 4.5vh;
+    font-size: 1.2rem;
+    margin-left: 0.7rem;
+    margin-right: 0.7rem;
+}
+
+#font-family {
+    width: 10vw;
+    min-width: 130px;
+    font-family: Noto Sans;
+}
+
+#font-size {
+    width: 3.5vw;
+    min-width: 55px;
+}
+
+.formula-bar {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: lightgray;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+}
+
+#selected-cell {
+    border-right: none;
+    width: 120px;
+    height: 70%;
+    
+}
+
+#function-sign {
+    height: 70%;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#function-input {
+    border-left: none;
+    width: calc(100vw - 160px);
+    height: 70%;
+}
+
+.formula-editor {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: #fff;
+}
+
