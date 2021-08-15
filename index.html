@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet" />
     <link rel = "stylesheet" href = "style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Excel Clone</title>
 </head>
 <body>
@@ -67,9 +68,15 @@
             </div>
             <div class = "formula-editor "id = "function-input" contenteditable="true"></div>
         </div>
-        <div class = "data-container"></div>
+        <div class = "data-container">
+            <div id = "select-all"></div>
+            <div id = "columns">
+            </div>
+            <div id = "rows"></div>
+            <div id = "cells"></div>
+        </div>
         <div class = "sheet-bar"></div>
     </div>
-    
+    <script src = "script.js"></script>
 </body>
 </html>
