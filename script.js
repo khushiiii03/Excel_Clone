@@ -1,4 +1,4 @@
-
+const ps = new PerfectScrollbar('#cells');
 
 for(let i = 1; i <= 100; i++) {
         let str = "";
@@ -26,3 +26,7 @@ for(let i = 1; i <= 100; i++) {
     $("#cells").append(row);
 }
 
+$("#cells").scroll(function(){
+    $("#columns").scrollLeft(this.scrollLeft);
+    $("#rows").scrollTop(this.scrollTop);
+});

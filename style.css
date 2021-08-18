@@ -151,21 +151,24 @@ body {
     border: 1px solid lightgray;
     border-left: none;
     display: flex;
+    overflow: hidden;
 }
 
 #rows {
     width: 25px;
     height: calc(76vh - 25px);
     border: 1px solid lightgray;
-    border-top: none;
+    /* border-top: none; */
     overflow: hidden;
     /* border-bottom: none; */
 }
 
 #cells {
+    position: relative;
     height: calc(76vh - 25px);
     width: calc(100vw - 25px);
-    border: 0px 1px 1px 0px solid lightgray;
+    border: 1px solid lightgray;
+    border-left: none;
     overflow: scroll;
 }
 
