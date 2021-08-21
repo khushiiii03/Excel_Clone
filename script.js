@@ -44,63 +44,95 @@ $(".input-cell").blur(function(){
 });
 
 $(".input-cell").click(function(e){
-
-if(e.ctrlKey) {
-   
     let idArray = $(this).attr("id").split("-");
     let rowId = parseInt(idArray[1]);
     let colId = parseInt(idArray[3]);
-
-     //top selected or not
-    let topSelected;
-    let topCell;
-    if(rowId != 0) {
-        topCell = $(`#row-${rowId-1}-col-${colId}`)
-        let topSelected = topCell.hasClass("selected");
+    let topCell = $(`#row-${rowId-1}-col-${colId}`);
+    let bottomCell = $(`#row-${rowId+1}-col-${colId}`);
+    let leftCell = $(`#row-${rowId}-col-${colId-1}`);
+    let rightCell = $(`#row-${rowId}-col-${colId+1}`);
+    if($(this).hasClass("selected")) {
+        unselectCell(this, e, topCell, bottomCell, leftCell, rightCell);
+        
+    } else {
+        selectCell(this, e, topCell, bottomCell, leftCell, rightCell);
     }
-    
-     //bottom selected or not
-    let bottomCell = $(`#row-${rowId+1}-col-${colId}`)
-    let bottomSelected = bottomCell.hasClass("selected");
+});
 
-     //left selected or not
-     let leftSelected;
-     let leftCell;
-     if(colId != 0) { 
-         leftCell = $(`#row-${rowId}-col-${colId-1}`)
-         let leftSelected = leftCell.hasClass("selected");
+function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
+    if(e.ctrlKey) {
+        if($(ele).hasClass("top-selected")) {
+            topCell.removeClass("bottom-selected");
+        }
+        if($(ele).hasClass("bottom-selected")) {
+            bottomCell.removeClass("top-selected");
+        }
+        if($(ele).hasClass("left-selected")) {
+            leftCell.removeClass("right-selected");
+        }
+        if($(ele).hasClass("right-selected")) {
+            rightCell.removeClass("left-selected");
+        }
+        $(ele).removeClass("selected top-selected bottom-selected right-selected left-selected");
     }
-
-     //right selected or not
-     let rightCell = $(`#row-${rowId}-col-${colId+1}`)
-     let rightSelected = rightCell.hasClass("selected");
-
-     if(topSelected) {
-         topCell.css({"border-bottom" : "0.5px solid lightgray"});
-         $(this).css("border-top", "none");
-     }
-
-     if(leftSelected) {
-        leftCell.css({"border-right" : "0.5px solid lightgray"});
-        $(this).css("border-left", "none");
-    }
-
-    if(rightSelected) {
-        rightCell.css({"border-left" : "none"});
-        $(this).css("border-right", "0.5px solid lightgray");
-    }
-
-    if(bottomSelected) {
-        bottomCell.css({"border-top" : "none"});
-        $(this).css("border-bottom", "0.5px solid lightgray");
-    }
-} else {
-    $(".input-cell.selected").removeClass("selected");
 }
 
- $(this).addClass("selected");
+function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
+    if(e.ctrlKey) {
+        let idArray = $(ele).attr("id").split("-");
+        let rowId = parseInt(idArray[1]);
+        let colId = parseInt(idArray[3]);
+    
+         //top selected or not
+        let topSelected;
+        if(topCell) {
+            topSelected = topCell.hasClass("selected");
+        }
+        
+         //bottom selected or not
+         let bottomSelected;
+         if(bottomCell) {
+             bottomSelected = bottomCell.hasClass("selected");
+         }
+    
+         //left selected or not
+         let leftSelected;
+         if(leftCell) { 
+             leftSelected = leftCell.hasClass("selected");
+        }
+    
+         //right selected or not
+         let rightSelected;
+         if(rightCell) {
+            rightSelected = rightCell.hasClass("selected");
+         }
 
-})
+    
+         if(topSelected) {
+             topCell.addClass("bottom-selected");
+             $(ele).addClass("top-selected");
+         }
+    
+         if(leftSelected) {
+            leftCell.addClass("right-selected");
+            $(ele).addClass("left-selected");
+        }
+    
+        if(rightSelected) {
+            rightCell.addClass("left-selected");
+            $(ele).addClass("right-selected");
+        }
+    
+        if(bottomSelected) {
+            bottomCell.addClass("top-selected");
+            $(ele).addClass("bottom-selected");
+        }
+    } else {
+        $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
+    }
+    
+     $(ele).addClass("selected");
+}
 
 
 
