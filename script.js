@@ -173,3 +173,9 @@ function selectAllBetweenTheRange(start, end) {
         }
     }
 }
+
+$("#bold").click(function(event) {
+    $(".input-cell.selected").each(function(index, ele) {
+        $(ele).html(`<b>${$(ele).text()}</b>`);
+    })
+})
