@@ -175,7 +175,29 @@ function selectAllBetweenTheRange(start, end) {
 }
 
 $("#bold").click(function(event) {
-    $(".input-cell.selected").each(function(index, ele) {
-        $(ele).html(`<b>${$(ele).text()}</b>`);
-    })
-})
+    if($(this).hasClass("selected")) {
+        $(this).removeClass("selected");
+        $(".input-cell.selected").each(function(index, ele) {
+            $(ele).html(`${$(ele).text()}`);
+        });
+    } else {
+        $(this).addClass("selected");
+        $(".input-cell.selected").each(function(index, ele) {
+            $(ele).html(`<b>${$(ele).text()}</b>`);
+        });
+    }
+});
+
+$("#italic").click(function(event) {
+    if($(this).hasClass("selected")) {
+        $(this).removeClass("selected");
+        $(".input-cell.selected").each(function(index, ele) {
+            $(ele).html(`${$(ele).text()}`);
+        });
+    } else {
+        $(this).addClass("selected");
+        $(".input-cell.selected").each(function(index, ele) {
+            $(ele).html(`<i>${$(ele).text()}</i>`);
+        });
+    }
+});
