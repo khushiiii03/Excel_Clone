@@ -6,7 +6,7 @@ function findRowCOl(ele) {
     let idArray = $(ele).attr("id").split("-");
     let rowId = parseInt(idArray[1]);
     let colId = parseInt(idArray[3]);
-    return [rowId,colId];
+    return [rowId, colId];
 }
 
 for (let i = 1; i <= 100; i++) {
@@ -49,19 +49,19 @@ $(".input-cell").blur(function () {
     $(this).attr("contenteditable", "false");
 });
 
-function getTopBottomLeftRightCell(rowId,colId) {
+function getTopBottomLeftRightCell(rowId, colId) {
     let topCell = $(`#row-${rowId - 1}-col-${colId}`);
     let bottomCell = $(`#row-${rowId + 1}-col-${colId}`);
     let leftCell = $(`#row-${rowId}-col-${colId - 1}`);
     let rightCell = $(`#row-${rowId}-col-${colId + 1}`);
-    return[topCell, bottomCell, leftCell,rightCell];
+    return [topCell, bottomCell, leftCell, rightCell];
 }
 
 $(".input-cell").click(function (e) {
-    let [rowId,colId] = findRowCOl(this);
-    let [topCell, bottomCell, leftCell,rightCell] = getTopBottomLeftRightCell(rowId,colId);
-    
-    if ($(this).hasClass("selected")) {
+    let [rowId, colId] = findRowCOl(this);
+    let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(rowId, colId);
+
+    if ($(this).hasClass("selected") && e.ctrlKey) {
         unselectCell(this, e, topCell, bottomCell, leftCell, rightCell);
 
     } else {
@@ -70,7 +70,7 @@ $(".input-cell").click(function (e) {
 });
 
 function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
-    if (e.ctrlKey && $(ele).attr("contenteditable") == "false") {
+    if ($(ele).attr("contenteditable") == "false") {
         if ($(ele).hasClass("top-selected")) {
             topCell.removeClass("bottom-selected");
         }
@@ -146,27 +146,30 @@ let startCellStored = false;
 let startCell;
 let endCell;
 $(".input-cell").mousemove(function (event) {
-    if (event.buttons == 1 && !startCellStored) {
+    event.preventDefault();
+    if (event.buttons == 1 && !event.ctrlKey) {
         $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
-        startCellStored = true;
         mousemoved = true;
-        let [rowId,colId] = findRowCOl(event.target);
-        startCell = { rowId: rowId, colId: colId};
+        if (!startCellStored) {
+            let [rowId, colId] = findRowCOl(event.target);
+            startCell = { rowId: rowId, colId: colId };
+            startCellStored = true;
+        } else {
+            let [rowId, colId] = findRowCOl(event.target);
+            endCell = { rowId: rowId, colId: colId };
+            selectAllBetweenTheRange(startCell, endCell);
+        }
+    } else if (event.buttons == 0 && mousemoved) {
+            startCellStored = false;
+            mousemoved = false;
+        }
+    })
 
-    } else if(event.buttons == 0 && mousemoved) {
-        startCellStored = false;
-        mousemoved = false;
-        let [rowId,colId] = findRowCOl(event.target);
-        endCell = { rowId: rowId, colId: colId};
-        selectAllBetweenTheRange(startCell,endCell);
-    }
-});
-
-function selectAllBetweenTheRange(start,end) {
-    for(let i = start.rowId; i <= end.rowId; i++) {
-        for(let j = start.colId; j <= end.colId; j++){
-            let [topCell, bottomCell, leftCell,rightCell] = getTopBottomLeftRightCell(i,j);
-            selectCell($(`#row-${i}-col-${j}`)[0], {}, topCell, bottomCell, leftCell,rightCell, true);
+function selectAllBetweenTheRange(start, end) {
+    for (let i = (start.rowId < end.rowId ? start.rowId : end.rowId); i <= (start.rowId < end.rowId ? end.rowId : start.rowId); i++) {
+        for (let j = (start.colId < end.colId ? start.colId : end.colId); j <= (start.colId < end.colId ? end.colId : start.colId); j++) {
+            let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(i, j);
+            selectCell($(`#row-${i}-col-${j}`)[0], {}, topCell, bottomCell, leftCell, rightCell, true);
         }
     }
 }
